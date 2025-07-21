@@ -37,7 +37,9 @@ export async function POST(req: Request) {
     const groqData = await groqRes.json();
     const reply = groqData?.choices?.[0]?.message?.content || "Sorry, I couldn't process that.";
 
-    return NextResponse.json({ reply });
+    return NextResponse.json({
+      messages: [{ text: reply }]
+    });
   } catch (error) {
     console.error("Groq API Error:", error);
     return NextResponse.json({ error: "AI processing failed." }, { status: 500 });
